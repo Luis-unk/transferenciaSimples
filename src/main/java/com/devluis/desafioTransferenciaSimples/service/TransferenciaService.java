@@ -6,7 +6,6 @@ import com.devluis.desafioTransferenciaSimples.entity.TipoUsuario;
 import com.devluis.desafioTransferenciaSimples.entity.Transferencia;
 import com.devluis.desafioTransferenciaSimples.entity.Usuario;
 import com.devluis.desafioTransferenciaSimples.exeptions.BadRequestException;
-import com.devluis.desafioTransferenciaSimples.infra.clients.NotificacaoClient;
 import com.devluis.desafioTransferenciaSimples.repository.TransferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,11 +43,13 @@ public class TransferenciaService {
         verificarSaldo(pagador, transferenciaDTO.getValue());
         validarTransferencia();
 
-        pagador.getCarteira().getSaldo().subtract(transferenciaDTO.getValue());
-        atualizarSaldoCarteira(pagador.getCarteira());
+        Carteira carteiraPagador = pagador.getCarteira();
+        carteiraPagador.setSaldo(carteiraPagador.getSaldo().subtract(transferenciaDTO.getValue()));
+        atualizarSaldoCarteira(carteiraPagador);
 
-        recebedor.getCarteira().getSaldo().add(transferenciaDTO.getValue());
-        atualizarSaldoCarteira(recebedor.getCarteira());
+        Carteira carteiraRecebedor = recebedor.getCarteira();
+        carteiraRecebedor.setSaldo(carteiraRecebedor.getSaldo().add(transferenciaDTO.getValue()));
+        atualizarSaldoCarteira(carteiraRecebedor);
 
         Transferencia transferencia = Transferencia.builder()
                 .valor(transferenciaDTO.getValue())

@@ -20,7 +20,10 @@ public class Carteira {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "saldo")
+    private BigDecimal saldo;
+
     @JoinColumn(name = "usuario_id")
     @OneToOne
-    private BigDecimal saldo;
+    Usuario usuario;
 }

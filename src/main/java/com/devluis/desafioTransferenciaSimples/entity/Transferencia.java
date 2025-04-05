@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tranferencia")
+@Entity(name = "transferencia")
 @Table
 @Builder
 public class Transferencia {
@@ -27,5 +28,12 @@ public class Transferencia {
     @JoinColumn(name = "pagador_id")
     @ManyToOne
     private Usuario pagador;
+
+    private LocalDateTime dataHoraTransferencia;
+
+    @PrePersist
+    void prePersist(){
+        dataHoraTransferencia = LocalDateTime.now();
+    }
 
 }

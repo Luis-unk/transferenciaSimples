@@ -17,8 +17,8 @@ public class TransferenciaController {
 
     @PostMapping
     public ResponseEntity<?> realizarTransferencia(@RequestBody TransferenciaDTO transferenciaDTO){
-        service.realizarTransferencia(transferenciaDTO);
-        return ResponseEntity.accepted().build();
+            service.realizarTransferencia(transferenciaDTO);
+            return ResponseEntity.accepted().build();
     }
 
 }

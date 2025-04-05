@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface AutorizacaoClient {
 
     @GetMapping
-    AutorizacaoDTO validarAutorizacao();
+    AutorizacaoDTO validarAutorizacao(); // A resposta é desserializada diretamente em nosso DTO
 }
