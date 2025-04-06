@@ -1,5 +1,6 @@
 package com.devluis.desafioTransferenciaSimples.exeptions;
 
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,6 +22,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFound.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFound e){
         return new ResponseEntity<>("Erro: " + e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<String> handleFeignException(FeignException e){
+        return new ResponseEntity<>("Erro: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
 }

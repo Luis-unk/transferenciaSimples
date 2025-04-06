@@ -40,7 +40,6 @@ services:
     networks:
       - public_network
 
-
 networks:
   public_network:
     driver: bridge
