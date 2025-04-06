@@ -1,0 +1,47 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - db-postgres
+    networks:
+      - public_network
+
+  db-postgres:
+    image: postgres:15
+    container_name: db-postgres
+    environment:
+      POSTGRES_DB: db_transferencias
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: developer
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgresdocker" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - public_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db-postgres
+    networks:
+      - public_network
+
+
+networks:
+  public_network:
+    driver: bridge
+
